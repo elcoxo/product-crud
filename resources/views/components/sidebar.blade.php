@@ -31,20 +31,27 @@
 
         </ul>
         <hr>
-        <div class="dropdown pb-4">
+        <div class="dropdown pb-4 w-100">
             @guest
-                @if (Route::has('login'))
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                    </li>
-                @endif
+                <ul class="nav nav-pills  flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start w-100"
+                    id="menu">
+                    @if (Route::has('auth.login.index'))
+                        <x-nav-link href="{{ route('auth.login.index') }}"
+                                    :active="request()->is('login')">
+                            {{ __('Login') }}
+                        </x-nav-link>
+                    @endif
 
-                @if (Route::has('register'))
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                    </li>
-                @endif
-            @else
+                    @if (Route::has('auth.register.index'))
+                        <x-nav-link href="{{ route('auth.register.index') }}"
+                                    :active="request()->is('register')">
+                            {{ __('Register') }}
+                        </x-nav-link>
+
+                    @endif
+                </ul>
+            @endguest
+            @auth()
                 <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                    id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="d-none d-sm-inline mx-1">
@@ -56,18 +63,18 @@
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="{{ route('logout') }}"
+                    <li><a class="dropdown-item" href="{{ route('auth.logout') }}"
                            onclick="event.preventDefault();
                            document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
                         </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                        <form id="logout-form" action="{{ route('auth.logout') }}" method="POST"
                               class="d-none">
                             @csrf
                         </form>
                     </li>
                 </ul>
-            @endguest
+            @endauth
 
         </div>
 
