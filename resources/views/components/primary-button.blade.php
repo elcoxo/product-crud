@@ -7,7 +7,7 @@
         @endif
         {{$slot}}
     </button>
-@else
+@elseif($type==="link")
     <a {{$attributes->merge(['class' => 'btn btn-' . $variant])}}>
         @if($icon)
             <span class="{{$icon}}"></span>
